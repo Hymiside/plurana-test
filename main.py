@@ -11,8 +11,8 @@ def random_choice(options):
     return random.choice(options)
 
 
-def parse_canvas_size(size_str):
-    width, height = size_str.split("x")
+def parse_canvas_size(size_canvas: str) -> (int, int):
+    width, height = size_canvas.split("x")
     return int(width), int(height)
 
 
@@ -161,12 +161,12 @@ class PolygonGroup(Component):
                     group_components.add(child_component)
             case "polygon":
                 for i in range(self.vertex_count):
-                    child_component = self.draw_child_polygon(dwg, points_list[i], size, rotation)
+                    child_component = self._draw_child_polygon(dwg, points_list[i], size, rotation)
                     group_components.add(child_component)
         return group_components
 
     # draw_child_polygon draws a child polygon
-    def draw_child_polygon(self, dwg, center, size, rotation):
+    def _draw_child_polygon(self, dwg, center, size, rotation):
         x, y = center
         p = (0, size * 0.5)
         points_list = [p, ]
@@ -203,7 +203,11 @@ def create_component(params):
     elif component_type == "Ellipse":
         return Ellipse(params["id"], style)
     elif component_type == "Polygon":
-        return Polygon(params["id"], style, params["vertex_count"], params["center_elements"])
+        return Polygon(
+            params["id"],
+            style,
+            params["vertex_count"],
+            params["center_elements"])
     elif component_type == "PolygonGroup":
         return PolygonGroup(
             params["id"],
