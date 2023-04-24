@@ -78,4 +78,4 @@ element_defs:
       stroke: [red, green]
       stroke_width: [1, 2]
 
-component_to_draw: [background, polygon]
+component_to_draw: [background, polygon_group]
